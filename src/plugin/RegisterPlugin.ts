@@ -12,9 +12,28 @@ import { config } from "bluebird";
 import { Config } from "../config/config";
 import { Request, Response } from "express";
 import * as bodyParser from "body-parser";
+import { ServiceInfo } from "../auth/model/service";
+import { TokenInfo } from "../auth/model/token";
 let registerApp = express();
 registerApp.use(bodyParser.json());
 registerApp.use(bodyParser.urlencoded({extended: true}));
+registerApp.use('/', async (req, res, next) => {
+  const token = req.headers.authorization
+  const url = req.path
+  const serviceInfo = await ServiceInfo.getSerivce(url)
+  if (serviceInfo && serviceInfo.status === true) {
+    const result = await TokenInfo.getToken(token, url)
+    if (result) {
+      console.log('认证成功')
+      next()
+    } else{
+      res.sendStatus(401)
+    }
+  } else {
+    console.log('此服务不需要认证')
+    next()
+  }
+})
 /**
  * 注册API数据
  */
@@ -39,7 +58,7 @@ class RegisterPlugin {
 			RegisterPlugin._registerApp._router.stack.length = 2;
 		}
 		// 加载数据
-		for (let i = 0; i < url.length; i++) {
+		for (let i = 0; url && i < url.length; i++) {
 			// 注册原子API
 			if (url[i].status == 0 && url[i].is_atom === "1") {
 				let value = { "to": url[i].to, "status": url[i].status };

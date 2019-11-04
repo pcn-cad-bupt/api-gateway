@@ -2,10 +2,10 @@ import * as path from "path";
 class Config{
     private _baseDir = path.join(__dirname, "../../");
     private _storage = {
-        "host": '******',
-        "user": '******',
-        "password": '******',
-        "database": '******',
+        "host": '127.0.0.1',
+        "user": 'root',
+        "password": 'lym130060',
+        "database": 'api-gateway',
         "protocol": "mysql",
         "port": "3306"
     };
