@@ -257,7 +257,7 @@ this is a post method. Parameter:
 }
 ```
 
-3. use token in header
+3. use token in header(authorization field)
 
 ------
 
