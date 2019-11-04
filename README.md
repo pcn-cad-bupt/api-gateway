@@ -224,6 +224,41 @@ http://localhost:8001/viewSoursePerformance?name= <APIname>
 ```
 http://localhost:8001/viewUserPerformance?username= <username>
 ```
+
+## Module 7
+
+@Linyimin
+
+Auth module
+
+How to use?
+
+1. add service which need to auth
+
+```
+http://localhost:8081/auth/service/add?name=sendMessage
+```
+
+name is the url of service.
+
+2. add a token
+
+```
+http://localhost:8081/auth/token/add
+```
+
+this is a post method. Parameter:
+
+```
+{
+  "username": "lin",
+  "passwd": "123456",
+  "expire": 100
+}
+```
+
+3. use token in header
+
 ------
 
 ### A template of swagger file:
